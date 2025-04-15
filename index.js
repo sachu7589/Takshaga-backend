@@ -5,6 +5,8 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const userRoutes = require('./routes/userRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const materialRoutes = require('./routes/materialRoutes');
+const clientRoutes = require('./routes/clientRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -28,6 +30,8 @@ mongoose.connect("mongodb+srv://takshaga:Takshaga2025@takshagamanagement.yk8heda
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/materials', materialRoutes);
+app.use('/api/clients', clientRoutes);
 
 // Start server
 app.listen(PORT, () => {

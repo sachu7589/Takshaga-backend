@@ -11,9 +11,9 @@ const materialSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
+        type: String,
+        required: true,
+        trim: true
     },
     status: {
         type: Number,
