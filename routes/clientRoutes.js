@@ -65,4 +65,24 @@ router.put('/update/:id', async (req, res) => {
     }
 });
 
+// Update client status by ID
+// http://localhost:3000/api/clients/status/:id
+router.put('/status/:id', async (req, res) => {
+    try {
+        const { status } = req.body;
+        const client = await Client.findByIdAndUpdate(
+            req.params.id,
+            { status },
+            { new: true }
+        );
+        if (!client) {
+            return res.status(404).json({ message: 'Client not found' });
+        }
+        res.json(client);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+
 module.exports = router; 

@@ -27,6 +27,10 @@ const clientSchema = new mongoose.Schema({
     completed: {
         type: Number,
         default: 0
+    },
+    status: {
+        type: Number,
+        default: 1
     }
 }, { timestamps: true });
 

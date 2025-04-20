@@ -7,6 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const materialRoutes = require('./routes/materialRoutes');
 const clientRoutes = require('./routes/clientRoutes');
+const estimateRoutes = require('./routes/estimateRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -32,6 +33,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/materials', materialRoutes);
 app.use('/api/clients', clientRoutes);
+app.use('/api/estimates', estimateRoutes);
 
 // Start server
 app.listen(PORT, () => {

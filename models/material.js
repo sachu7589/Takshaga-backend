@@ -15,6 +15,11 @@ const materialSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    measurementType: {
+        type: String,
+        required: true,
+        trim: true
+    },
     status: {
         type: Number,
         default: 1
