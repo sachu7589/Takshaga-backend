@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
-const materialSchema = new mongoose.Schema({
-    name: {
+const sectionSchema = new mongoose.Schema({
+    materialName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    description: {
         type: String,
         required: true,
         trim: true
@@ -15,7 +20,12 @@ const materialSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    measurementType: {
+    subcategory: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    unitType: {
         type: String,
         required: true,
         trim: true
@@ -28,4 +38,6 @@ const materialSchema = new mongoose.Schema({
     timestamps: true
 });
 
-module.exports = mongoose.model('Material', materialSchema);
+const Section = mongoose.model('Section', sectionSchema);
+
+module.exports = Section; 

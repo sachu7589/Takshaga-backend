@@ -1,59 +1,89 @@
 const mongoose = require('mongoose');
 
 const estimateSchema = new mongoose.Schema({
-  estimateNumber: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  clientId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Client',
-    required: true
-  },
-  clientName: {
-    type: String,
-    required: true
-  },
-  materials: [{
+    clientId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Client',
+        required: true
+    },
+    clientName: {
+        type: String,
+        required: true,
+        trim: true
+    },
     name: {
-      type: String,
-      required: true
+        type: String,
+        required: true,
+        trim: true
     },
-    category: {
-      type: String,
-      required: true
+    discount: {
+        type: Number,
+        default: 0
     },
-    measurementType: {
-      type: String,
-      required: true
-    },
-    dimensions: {
-      type: Object,
-      default: {}
-    },
-    price: {
-      type: Number,
-      required: true
-    },
+    sections: [{
+        category: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        subcategory: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        material: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        description: {
+            type: String,
+            required: true,
+            trim: true
+        },
+        measurements: [{
+            length: {
+                type: Number,
+                required: true
+            },
+            breadth: {
+                type: Number,
+                required: true
+            },
+            area: {
+                type: Number,
+                required: true
+            }
+        }],
+        unitPrice: {
+            type: Number,
+            required: true
+        },
+        quantity: {
+            type: Number,
+            required: true
+        },
+        total: {
+            type: Number,
+            required: true
+        }
+    }],
     total: {
-      type: Number,
-      required: true
+        type: Number,
+        required: true
+    },
+    grandTotal: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: Number,
+        default: 1
     }
-  }],
-  grandTotal: {
-    type: Number,
-    required: true
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'approved', 'rejected'],
-    default: 'pending'
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+}, {
+    timestamps: true
 });
 
-module.exports = mongoose.model('Estimate', estimateSchema); 
+const Estimate = mongoose.model('Estimate', estimateSchema);
+
+module.exports = Estimate;
