@@ -34,6 +34,5 @@ const clientSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const Client = mongoose.model('Client', clientSchema);
-
-module.exports = Client;
+// Check if the model already exists to prevent "Cannot overwrite model" error
+module.exports = mongoose.models.Client || mongoose.model('Client', clientSchema);

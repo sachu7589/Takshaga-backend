@@ -84,6 +84,5 @@ const estimateSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Estimate = mongoose.model('Estimate', estimateSchema);
-
-module.exports = Estimate;
+// Check if the model already exists to prevent "Cannot overwrite model" error
+module.exports = mongoose.models.Estimate || mongoose.model('Estimate', estimateSchema);
