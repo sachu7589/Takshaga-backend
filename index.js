@@ -41,3 +41,7 @@ app.use('/api/sections', sectionRoutes);
 app.listen(PORT, () => {
     console.log(` Server running at http://localhost:${PORT}`);
 });
+// Express example
+app.get('/ping', (req, res) => {
+  res.status(200).send('pong');
+});
