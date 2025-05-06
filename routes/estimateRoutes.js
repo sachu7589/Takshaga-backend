@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Estimate = require('../models/estimate.js');
+const Estimate = require('../models/Estimate');
 const Client = require('../models/client');
 
 // Create a new estimate
