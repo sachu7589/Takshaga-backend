@@ -9,6 +9,10 @@ const clientRoutes = require('./routes/clientRoutes');
 const estimateRoutes = require('./routes/estimateRoutes');
 const subcategoryRoutes = require('./routes/subcategory');
 const sectionRoutes = require('./routes/section');
+const careerRoutes = require('./routes/careerRoutes');
+const stageRoutes = require('./routes/stageRoutes');
+const clientPaymentRoutes = require('./routes/clientPaymentRoutes');
+const clientExpenseRoutes = require('./routes/clientExpenseRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -36,6 +40,10 @@ app.use('/api/clients', clientRoutes);
 app.use('/api/estimates', estimateRoutes);
 app.use('/api/subcategories', subcategoryRoutes);
 app.use('/api/sections', sectionRoutes);
+app.use('/api/careers', careerRoutes);
+app.use('/api/stages', stageRoutes);
+app.use('/api/client-payments', clientPaymentRoutes);
+app.use('/api/client-expenses', clientExpenseRoutes);
 
 // Start server
 app.listen(PORT, () => {
