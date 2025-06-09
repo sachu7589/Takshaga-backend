@@ -19,6 +19,10 @@ const clientExpenseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    notes: {
+        type: String,
+        default: null
+    },
     date: {
         type: Date,
         default: Date.now

@@ -5,12 +5,13 @@ const ClientExpense = require('../models/clientExpense');
 // Create a new client expense
 router.post('/', async (req, res) => {
     try {
-        const { clientId, userId, amount, purpose } = req.body;
+        const { clientId, userId, amount, purpose, notes } = req.body;  // Destructure notes from req.body
         const newExpense = new ClientExpense({
             clientId,
             userId,
             amount,
-            purpose
+            purpose,
+            notes: notes || null  // Set notes to null if it's undefined
         });
         const savedExpense = await newExpense.save();
         res.status(201).json(savedExpense);
