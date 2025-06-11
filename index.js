@@ -13,6 +13,7 @@ const careerRoutes = require('./routes/careerRoutes');
 const stageRoutes = require('./routes/stageRoutes');
 const clientPaymentRoutes = require('./routes/clientPaymentRoutes');
 const clientExpenseRoutes = require('./routes/clientExpenseRoutes');
+const bankRoutes = require('./routes/bankRoutes');
 
 const app = express();
 const PORT = 3000;
@@ -44,6 +45,7 @@ app.use('/api/careers', careerRoutes);
 app.use('/api/stages', stageRoutes);
 app.use('/api/client-payments', clientPaymentRoutes);
 app.use('/api/client-expenses', clientExpenseRoutes);
+app.use('/api/banks', bankRoutes);
 
 // Start server
 app.listen(PORT, () => {
