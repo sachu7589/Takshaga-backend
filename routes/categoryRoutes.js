@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../models/category');
+const { authenticateToken } = require('../middleware/auth');
 
 // Get all categories
 // http://localhost:3000/api/categories/display
@@ -15,7 +16,7 @@ router.get('/display', async (req, res) => {
 
 // Insert a new category
 // http://localhost:3000/api/categories/insert
-router.post('/insert', async (req, res) => {
+router.post('/insert', authenticateToken, async (req, res) => {
     try {
         const { name } = req.body;
         
@@ -38,7 +39,7 @@ router.post('/insert', async (req, res) => {
 
 // Update a category by ID
 // http://localhost:3000/api/categories/update/:id
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:id', authenticateToken, async (req, res) => {
     try {
         const { id } = req.params;
         const { name, status } = req.body;

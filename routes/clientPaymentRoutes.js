@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const ClientPayment = require('../models/clientPayment');
+const { authenticateToken } = require('../middleware/auth');
 
 // Create a new client payment
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     try {
         const payment = new ClientPayment(req.body);
         const savedPayment = await payment.save();
@@ -24,7 +25,7 @@ router.get('/client/:clientId', async (req, res) => {
 });
 
 // Update a payment by ID
-router.put('/:id', async (req, res) => {
+router.put('/:id', authenticateToken, async (req, res) => {
     try {
         const updatedPayment = await ClientPayment.findByIdAndUpdate(
             req.params.id,

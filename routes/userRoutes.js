@@ -5,6 +5,8 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
+const jwt = require('jsonwebtoken');
+const { authenticateToken } = require('../middleware/auth');
 
 // Create uploads directory if it doesn't exist
 const uploadDir = path.join(__dirname, '../uploads');
@@ -97,8 +99,15 @@ router.post('/login', async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
+        // Generate JWT token
+        const token = jwt.sign(
+            { _id: user._id, email: user.email, role: user.role },
+            process.env.JWT_SECRET || 'fallback_jwt_secret_for_development',
+            { expiresIn: '7d' }
+        );
         res.status(200).json({
             message: 'Login successful',
+            token,
             user: {
                 _id: user._id,
                 name: user.name,
@@ -112,6 +121,35 @@ router.post('/login', async (req, res) => {
         console.error('Login error:', error);
         res.status(500).json({
             message: 'Error logging in',
+            error: error.message
+        });
+    }
+});
+
+// http://localhost:3000/api/users/me - Token verification endpoint
+router.get('/me', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).select('-password');
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        res.status(200).json({
+            message: 'Token verified successfully',
+            user: {
+                _id: user._id,
+                name: user.name,
+                email: user.email,
+                phone: user.phone,
+                image: user.image,
+                role: user.role
+            }
+        });
+    } catch (error) {
+        console.error('Token verification error:', error);
+        res.status(500).json({
+            message: 'Error verifying token',
             error: error.message
         });
     }
@@ -153,7 +191,19 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-
-
+// http://localhost:3000/api/users/logout
+router.post('/logout', authenticateToken, async (req, res) => {
+    try {
+        // You can implement token blacklisting here if needed
+        // For now, we'll just return success since the frontend handles token removal
+        res.status(200).json({ message: 'Logged out successfully' });
+    } catch (error) {
+        console.error('Logout error:', error);
+        res.status(500).json({
+            message: 'Error during logout',
+            error: error.message
+        });
+    }
+});
 
 module.exports = router;

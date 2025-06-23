@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const ClientExpense = require('../models/clientExpense');
+const { authenticateToken } = require('../middleware/auth');
 
 // Create a new client expense
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     try {
         const { clientId, userId, amount, purpose, notes } = req.body;  // Destructure notes from req.body
         const newExpense = new ClientExpense({

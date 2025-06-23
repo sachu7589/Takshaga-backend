@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Estimate = require('../models/Estimate');
 const Client = require('../models/client');
+const { authenticateToken } = require('../middleware/auth');
 
 // Create a new estimate
 // http://localhost:3000/api/estimates/insert
-router.post('/insert', async (req, res) => {
+router.post('/insert', authenticateToken, async (req, res) => {
     try {
         const { 
             clientId, 
@@ -103,7 +104,7 @@ router.get('/client/:clientId/grandTotal', async (req, res) => {
 
 // Update an estimate by ID
 // http://localhost:3000/api/estimates/update/:id
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:id', authenticateToken, async (req, res) => {
     try {
         const { 
             clientId, 
@@ -140,7 +141,7 @@ router.put('/update/:id', async (req, res) => {
 
 // Update estimate status by ID
 // http://localhost:3000/api/estimates/status/:id
-router.put('/status/:id', async (req, res) => {
+router.put('/status/:id', authenticateToken, async (req, res) => {
     try {
         const { status } = req.body;
         const estimate = await Estimate.findByIdAndUpdate(

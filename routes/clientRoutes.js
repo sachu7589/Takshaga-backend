@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const Client = require('../models/client');
+const { authenticateToken } = require('../middleware/auth');
 
 // Create a new client
 // http://localhost:3000/api/clients/insert
-router.post('/insert', async (req, res) => {
+router.post('/insert', authenticateToken, async (req, res) => {
     try {
         const { clientName, email, phoneNumber, location, typeOfWork } = req.body;
         const client = new Client({
@@ -48,7 +49,7 @@ router.get('/display/:id', async (req, res) => {
 
 // Update a client by ID
 // http://localhost:3000/api/clients/update/:id
-router.put('/update/:id', async (req, res) => {
+router.put('/update/:id', authenticateToken, async (req, res) => {
     try {
         const { clientName, email, phoneNumber, location, typeOfWork, stage, completed } = req.body;
         const client = await Client.findByIdAndUpdate(
@@ -67,7 +68,7 @@ router.put('/update/:id', async (req, res) => {
 
 // Update client status by ID
 // http://localhost:3000/api/clients/status/:id
-router.put('/status/:id', async (req, res) => {
+router.put('/status/:id', authenticateToken, async (req, res) => {
     try {
         const { status } = req.body;
         const client = await Client.findByIdAndUpdate(
@@ -83,6 +84,5 @@ router.put('/status/:id', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-
 
 module.exports = router; 

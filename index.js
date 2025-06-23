@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -16,7 +17,7 @@ const clientExpenseRoutes = require('./routes/clientExpenseRoutes');
 const bankRoutes = require('./routes/bankRoutes');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json()); 
@@ -30,7 +31,7 @@ app.use(fileUpload({
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Connect to MongoDB
-mongoose.connect("mongodb+srv://takshaga:Takshaga2025@takshagamanagement.yk8heda.mongodb.net/?retryWrites=true&w=majority&appName=takshagaManagement")
+mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://takshaga:Takshaga2025@takshagamanagement.yk8heda.mongodb.net/?retryWrites=true&w=majority&appName=takshagaManagement")
   .then(() => console.log(" Connected to MongoDB"))
   .catch(err => console.error(" Database connection error:", err));
 
