@@ -20,10 +20,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: ['https://admin.takshaga.com', 'http://localhost:3000', 'http://localhost:3001'],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token']
+  origin: ['https://admin.takshaga.com', 'http://localhost:3000', 'http://localhost:5173'],
+  credentials: true
 }));
 app.use(express.json()); 
 app.use(fileUpload({
@@ -60,4 +58,8 @@ app.listen(PORT, () => {
 // Express example
 app.get('/ping', (req, res) => {
   res.status(200).send('pong');
+});
+
+app.get('/wake', (req, res) => {
+  res.send('Backend is awake');
 });
